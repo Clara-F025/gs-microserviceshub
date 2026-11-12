@@ -1,0 +1,4 @@
+package com.github.clara_f025.ms_coleta_impacto.clients;
+
+public record ReservarLoteRemoteRequest(String idColetor) {
+}
