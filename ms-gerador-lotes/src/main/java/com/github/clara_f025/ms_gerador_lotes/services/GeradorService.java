@@ -40,13 +40,13 @@ public class GeradorService {
     @Transactional(readOnly = true)
     public GeradorStatusResponse consultarStatus(String cnpj) {
         Gerador gerador = obterGerador(cnpj);
-        return new GeradorStatusResponse(gerador.getCnpj(), gerador.getStatus(),
+        return new GeradorStatusResponse(gerador.getId(), gerador.getCnpj(), gerador.getStatus(),
                 gerador.getStatus() == StatusGerador.ATIVO);
     }
 
     @Transactional
     public GeradorResponse criar(GeradorRequest request) {
-        if (geradorRepository.existsById(request.cnpj())) {
+        if (geradorRepository.existsByCnpj(request.cnpj())) {
             throw new ConflictException("Já existe um gerador cadastrado com o CNPJ " + request.cnpj());
         }
         Gerador gerador = new Gerador();
@@ -94,7 +94,7 @@ public class GeradorService {
     }
 
     private Gerador obterGerador(String cnpj) {
-        return geradorRepository.findById(cnpj)
+        return geradorRepository.findByCnpj(cnpj)
                 .orElseThrow(() -> new ResourceNotFoundException("Gerador não encontrado. CNPJ: " + cnpj));
     }
 }

@@ -5,6 +5,7 @@ import com.github.clara_f025.ms_coleta_impacto.entities.Coletor;
 import java.math.BigDecimal;
 
 public record ColetorResponse(
+        Long id,
         String cpfCnpj,
         String nome,
         String telefone,
@@ -15,6 +16,7 @@ public record ColetorResponse(
 
     public static ColetorResponse from(Coletor coletor) {
         return new ColetorResponse(
+                coletor.getId(),
                 coletor.getCpfCnpj(),
                 coletor.getNome(),
                 coletor.getTelefone(),

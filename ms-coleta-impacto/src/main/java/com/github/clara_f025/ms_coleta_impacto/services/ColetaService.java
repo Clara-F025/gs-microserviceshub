@@ -211,7 +211,7 @@ public class ColetaService {
     }
 
     private Coletor obterColetor(String cpfCnpj) {
-        return coletorRepository.findById(cpfCnpj)
+        return coletorRepository.findByCpfCnpj(cpfCnpj)
                 .orElseThrow(() -> new ResourceNotFoundException("Coletor não encontrado. Documento: " + cpfCnpj));
     }
 }

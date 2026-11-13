@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public record LoteResponse(
+        Long id,
         String protocolo,
         String cnpjGerador,
         String responsavel,
@@ -24,6 +25,7 @@ public record LoteResponse(
 
     public static LoteResponse from(Lote lote) {
         return new LoteResponse(
+                lote.getId(),
                 lote.getProtocolo(),
                 lote.getGerador().getCnpj(),
                 lote.getResponsavel(),

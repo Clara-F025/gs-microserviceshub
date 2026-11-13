@@ -33,7 +33,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/coletas")
-@Tag(name = "Coletas", description = "Operação de coleta, custódia (PIN) e impacto ESG")
 public class ColetaController {
 
     private static final Logger log = LoggerFactory.getLogger(ColetaController.class);

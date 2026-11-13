@@ -36,7 +36,7 @@ public class ColetorService {
 
     @Transactional
     public ColetorResponse criar(ColetorRequest request) {
-        if (coletorRepository.existsById(request.cpfCnpj())) {
+        if (coletorRepository.existsByCpfCnpj(request.cpfCnpj())) {
             throw new ConflictException("Já existe um coletor cadastrado com o documento " + request.cpfCnpj());
         }
         Coletor coletor = new Coletor();
@@ -66,7 +66,7 @@ public class ColetorService {
     }
 
     private Coletor obterColetor(String cpfCnpj) {
-        return coletorRepository.findById(cpfCnpj)
+        return coletorRepository.findByCpfCnpj(cpfCnpj)
                 .orElseThrow(() -> new ResourceNotFoundException("Coletor não encontrado. Documento: " + cpfCnpj));
     }
 }

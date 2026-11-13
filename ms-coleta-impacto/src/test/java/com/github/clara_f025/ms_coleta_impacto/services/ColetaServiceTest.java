@@ -76,7 +76,7 @@ class ColetaServiceTest {
 
     @Test
     void baixaComPinCorretoCalculaImpactoEAtualizaColetor() {
-        when(coletorRepository.findById(COLETOR_ID)).thenReturn(Optional.of(coletor));
+        when(coletorRepository.findByCpfCnpj(COLETOR_ID)).thenReturn(Optional.of(coletor));
         when(coletorRepository.buscarParaAtualizacao(COLETOR_ID)).thenReturn(Optional.of(coletor));
         when(coletaRepository.findByProtocoloLote(PROTOCOLO)).thenReturn(Optional.empty());
         when(geradorLotesClient.coletar(any(), any(ColetarLoteRemoteRequest.class))).thenReturn(loteColetado("25.50"));
@@ -97,7 +97,7 @@ class ColetaServiceTest {
 
     @Test
     void baixaComPinInvalidoRetorna400SemAlterarColetor() {
-        when(coletorRepository.findById(COLETOR_ID)).thenReturn(Optional.of(coletor));
+        when(coletorRepository.findByCpfCnpj(COLETOR_ID)).thenReturn(Optional.of(coletor));
         when(coletaRepository.findByProtocoloLote(PROTOCOLO)).thenReturn(Optional.empty());
         when(geradorLotesClient.coletar(any(), any(ColetarLoteRemoteRequest.class))).thenThrow(feignException(400));
 
@@ -110,7 +110,7 @@ class ColetaServiceTest {
 
     @Test
     void falhaDoGeradorViraServiceUnavailable() {
-        when(coletorRepository.findById(COLETOR_ID)).thenReturn(Optional.of(coletor));
+        when(coletorRepository.findByCpfCnpj(COLETOR_ID)).thenReturn(Optional.of(coletor));
         when(coletaRepository.findByProtocoloLote(PROTOCOLO)).thenReturn(Optional.empty());
         when(geradorLotesClient.coletar(any(), any(ColetarLoteRemoteRequest.class))).thenThrow(feignException(500));
 

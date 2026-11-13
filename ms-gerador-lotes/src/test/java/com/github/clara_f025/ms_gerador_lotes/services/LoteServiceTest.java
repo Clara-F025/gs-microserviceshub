@@ -74,7 +74,7 @@ class LoteServiceTest {
 
     @Test
     void criaLoteDisponivelComPinDeQuatroDigitos() {
-        when(geradorRepository.findById(CNPJ)).thenReturn(Optional.of(gerador));
+        when(geradorRepository.findByCnpj(CNPJ)).thenReturn(Optional.of(gerador));
         when(viaCepClient.buscarPorCep("01310100"))
                 .thenReturn(new ViaCepResponse("01310-100", "Avenida Paulista", "Bela Vista", "Sao Paulo", "SP", null));
         when(loteRepository.save(any(Lote.class))).thenAnswer(invocation -> invocation.getArgument(0));
@@ -88,7 +88,7 @@ class LoteServiceTest {
 
     @Test
     void recusaPesoMenorQueDezQuilos() {
-        when(geradorRepository.findById(CNPJ)).thenReturn(Optional.of(gerador));
+        when(geradorRepository.findByCnpj(CNPJ)).thenReturn(Optional.of(gerador));
 
         assertThatThrownBy(() -> loteService.criar(request("9.99")))
                 .isInstanceOf(BusinessRuleException.class)
@@ -99,7 +99,7 @@ class LoteServiceTest {
     @Test
     void recusaGeradorInativo() {
         gerador.setStatus(StatusGerador.INATIVO);
-        when(geradorRepository.findById(CNPJ)).thenReturn(Optional.of(gerador));
+        when(geradorRepository.findByCnpj(CNPJ)).thenReturn(Optional.of(gerador));
 
         assertThatThrownBy(() -> loteService.criar(request("20")))
                 .isInstanceOf(BusinessRuleException.class);

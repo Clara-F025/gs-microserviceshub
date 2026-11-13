@@ -6,6 +6,7 @@ import com.github.clara_f025.ms_gerador_lotes.entities.StatusGerador;
 import java.time.LocalDateTime;
 
 public record GeradorResponse(
+        Long id,
         String cnpj,
         String razaoSocial,
         String cep,
@@ -15,6 +16,7 @@ public record GeradorResponse(
 
     public static GeradorResponse from(Gerador gerador) {
         return new GeradorResponse(
+                gerador.getId(),
                 gerador.getCnpj(),
                 gerador.getRazaoSocial(),
                 gerador.getCep(),

@@ -81,7 +81,7 @@ public class LoteService {
      * com o banco aberta durante a chamada HTTP externa.
      */
     public LoteCriadoResponse criar(CriarLoteRequest request) {
-        Gerador gerador = geradorRepository.findById(request.cnpj())
+        Gerador gerador = geradorRepository.findByCnpj(request.cnpj())
                 .orElseThrow(() -> new ResourceNotFoundException("Gerador não encontrado. CNPJ: " + request.cnpj()));
         if (gerador.getStatus() != StatusGerador.ATIVO) {
             throw new BusinessRuleException("Gerador inativo: agendamento não liberado");
@@ -107,7 +107,7 @@ public class LoteService {
         lote.setStatus(StatusLote.DISPONIVEL);
 
         Lote salvo = loteRepository.save(lote);
-        return new LoteCriadoResponse(salvo.getProtocolo(), salvo.getPinRetirada(), salvo.getDtRegistro(),
+        return new LoteCriadoResponse(salvo.getId(), salvo.getProtocolo(), salvo.getPinRetirada(), salvo.getDtRegistro(),
                 salvo.getStatus());
     }
 
@@ -218,12 +218,12 @@ public class LoteService {
         String protocolo;
         do {
             protocolo = "LT" + data + "-" + String.format("%06d", random.nextInt(1_000_000));
-        } while (loteRepository.existsById(protocolo));
+        } while (loteRepository.existsByProtocolo(protocolo));
         return protocolo;
     }
 
     private Lote obterLote(String protocolo) {
-        return loteRepository.findById(protocolo)
+        return loteRepository.findByProtocolo(protocolo)
                 .orElseThrow(() -> new ResourceNotFoundException("Lote não encontrado. Protocolo: " + protocolo));
     }
 

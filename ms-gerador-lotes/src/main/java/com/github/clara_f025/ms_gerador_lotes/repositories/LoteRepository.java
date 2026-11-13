@@ -11,13 +11,17 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface LoteRepository extends JpaRepository<Lote, String> {
+public interface LoteRepository extends JpaRepository<Lote, Long> {
 
     List<Lote> findByStatus(StatusLote status);
 
     List<Lote> findByStatusAndCep(StatusLote status, String cep);
 
     boolean existsByGeradorCnpj(String cnpj);
+
+    boolean existsByProtocolo(String protocolo);
+
+    Optional<Lote> findByProtocolo(String protocolo);
 
     @Query("select l from Lote l where l.protocolo = :protocolo")
     Optional<Lote> buscarParaAtualizacao(@Param("protocolo") String protocolo);

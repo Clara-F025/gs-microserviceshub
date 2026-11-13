@@ -23,7 +23,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/coletores")
-@Tag(name = "Coletores", description = "Cadastro de coletores e acompanhamento do impacto ESG acumulado")
 public class ColetorController {
 
     private final ColetorService coletorService;
